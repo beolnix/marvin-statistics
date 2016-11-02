@@ -1,0 +1,14 @@
+statistics:
+  image: registry.buildloft.com/statistics-service:0.1.0
+  links:
+    - mongodb
+  ports:
+    - 8087:8080
+  volumes:
+    - ./application.yml:/application.yml
+mongodb:
+  image: mongo:3.2
+  ports:
+    - 27017:27017
+  volumes:
+    - /home/deploy/mongo/data:/data/db

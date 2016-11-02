@@ -1,0 +1,97 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE'
+        classpath 'io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE'
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'docker'
+
+jar {
+    baseName = 'statistics-service'
+}
+
+repositories {
+    jcenter()
+    maven {
+        url "http://nexus.beolnix.com/content/repositories/releases/"
+    }
+    maven {
+        url "http://nexus.beolnix.com/content/repositories/snapshots/"
+    }
+    mavenCentral()
+}
+
+configurations {
+    runtime.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    all*.exclude group: '', module: 'servlet-api'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-netflix:1.0.4.RELEASE'
+    }
+}
+
+dependencies {
+
+    compile project(':statistics-api')
+
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile "org.springframework.boot:spring-boot-starter-jetty"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.cloud:spring-cloud-starter-feign"
+
+//    compile 'org.springframework.data:spring-data-commons:1.10.0.RELEASE'
+//    compile 'org.springframework.data:spring-data-mongodb:1.8.2.RELEASE'
+
+    compile 'org.springframework.data:spring-data-commons'
+    compile 'org.springframework.data:spring-data-mongodb'
+
+
+    compile "io.springfox:springfox-swagger2:2.3.1"
+    compile "io.springfox:springfox-swagger-ui:2.3.1"
+    compile 'com.google.guava:guava:18.0'
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0")
+
+
+
+    testCompile "junit:junit"
+    testCompile "com.github.tomakehurst:wiremock:1.57"
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+
+group = 'registry.buildloft.com'
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    tag = "${project.group}/statistics-service"
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+
+        copy {
+            from 'src/main/docker/run.sh'
+            into stageDir
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

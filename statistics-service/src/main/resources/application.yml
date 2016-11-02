@@ -1,0 +1,14 @@
+statistics.mongo.host: localhost
+statistics.mongo.database: statisticsDev
+statistics.hostname: localhost
+
+statistics.api.security:
+  accessKeys:
+    - key: 'test_read_key'
+      secret: 'test_read_auth'
+      roles:
+        - 'read'
+    - key: 'test_write_key'
+      secret: 'test_write_auth'
+      roles:
+        - 'write'
