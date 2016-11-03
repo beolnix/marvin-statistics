@@ -21,4 +21,12 @@ public class StatisticsDTO {
     public void setUserSpecificMetrics(List<UserSpecificMetricsDTO> userSpecificMetrics) {
         this.userSpecificMetrics = userSpecificMetrics;
     }
+
+    public ChatDTO getChat() {
+        return chat;
+    }
+
+    public void setChat(ChatDTO chat) {
+        this.chat = chat;
+    }
 }

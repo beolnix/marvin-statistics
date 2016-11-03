@@ -3,13 +3,17 @@ package com.beolnix.marvin.statistics.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@ApiModel("DTO to represent statistics aggregated for a month")
-public class YearStatisticsDTO {
+@ApiModel("DTO to represent statistics for a period of a time")
+public class AggregatedStatisticsPeriodDTO {
 
-    @ApiModelProperty(value = "Year number", required = true)
-    private Integer year;
+    @ApiModelProperty(value = "Period start date time", required = true)
+    private LocalDateTime periodStart;
+
+    @ApiModelProperty(value = "Period end date time", required = true)
+    private LocalDateTime periodEnd;
 
     @ApiModelProperty(value = "Total metrics aggregated for a year", required = true)
     private List<MetricDTO> totalMetrics;
@@ -17,12 +21,20 @@ public class YearStatisticsDTO {
     @ApiModelProperty(value = "Top user specific metrics aggregated for a year", required = true)
     private List<UserSpecificMetricsDTO> topUserSpecificMetrics;
 
-    public Integer getYear() {
-        return year;
+    public LocalDateTime getPeriodStart() {
+        return periodStart;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setPeriodStart(LocalDateTime periodStart) {
+        this.periodStart = periodStart;
+    }
+
+    public LocalDateTime getPeriodEnd() {
+        return periodEnd;
+    }
+
+    public void setPeriodEnd(LocalDateTime periodEnd) {
+        this.periodEnd = periodEnd;
     }
 
     public List<MetricDTO> getTotalMetrics() {
