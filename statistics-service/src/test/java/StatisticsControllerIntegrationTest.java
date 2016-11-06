@@ -87,7 +87,7 @@ public class StatisticsControllerIntegrationTest {
         assertTrue(result.size() > 1);
 
         List<AggregatedUserSpecificMetric> userSpecific = result.stream()
-                .filter(entry -> entry.getUsername().equals("testUser9"))
+                .filter(entry -> entry.getUsername().equals("testUser1"))
                 .collect(Collectors.toList());
 
         assertEquals(4, userSpecific.size());
@@ -113,14 +113,6 @@ public class StatisticsControllerIntegrationTest {
         assertTrue(result.getPeriods().size() > 1);
 
         assertNotNull(result.getPeriods().get(0));
-
-        while (true) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
-        }
     }
 
     private String createTestData(LocalDateTime start) {
