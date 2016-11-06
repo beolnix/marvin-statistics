@@ -4,6 +4,13 @@ statistics.hostname: localhost
 
 statistics.timeZone: UTC
 
+spring:
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+    time-zone: 'UTC'
+    serialization:
+      write-dates-as-timestamps: false
+
 statistics.api.security:
   accessKeys:
     - key: 'test_read_key'
