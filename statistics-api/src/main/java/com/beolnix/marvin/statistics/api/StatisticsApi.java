@@ -22,7 +22,6 @@ public interface StatisticsApi {
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Bad request - if the request body is in a wrong format.")
     })
-    @RequestMapping(method = RequestMethod.POST, value = "/statistics", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(
                     value = "statistics data transfer object",
@@ -31,6 +30,7 @@ public interface StatisticsApi {
                     required = true,
                     paramType = "body"),
     })
+    @RequestMapping(method = RequestMethod.POST, value = "/statistics", consumes = MediaType.APPLICATION_JSON_VALUE)
     void postStatistics(@RequestBody StatisticsDTO statisticsDTO);
 
 
@@ -43,7 +43,6 @@ public interface StatisticsApi {
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Bad request - if parameters are provided in a wrong format.")
     })
-    @RequestMapping(method = RequestMethod.GET, value = "/aggregated-statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(
                     value = "Start date time of a requested statistics in ISO-8601 format.",
@@ -76,11 +75,13 @@ public interface StatisticsApi {
                     required = false,
                     paramType = "query")
     })
+
+    @RequestMapping(method = RequestMethod.GET, value = "/aggregated-statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     AggregatedStatisticsDTO getAggregatedStatistics(
-            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
-            @RequestParam(required = true) Integer periodLengthInHours,
-            @RequestParam(required = true) String chatId,
-            @RequestParam(required = false) String metricName
+            @RequestParam(value="start", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam(value="end", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @RequestParam(value="periodLengthInHours", required = true) Integer periodLengthInHours,
+            @RequestParam(value="chatId", required = true) String chatId,
+            @RequestParam(value="metricName", required = false) String metricName
     );
 }
