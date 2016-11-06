@@ -3,6 +3,7 @@ package com.beolnix.marvin.statistics.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @ApiModel("DTO for the chat statistics")
@@ -12,7 +13,7 @@ public class StatisticsDTO {
     private ChatDTO chat;
 
     @ApiModelProperty(value = "List of a user specific metrics", required = true)
-    private List<UserSpecificMetricsDTO> userSpecificMetrics;
+    private List<UserSpecificMetricsDTO> userSpecificMetrics = new LinkedList<>();
 
     public List<UserSpecificMetricsDTO> getUserSpecificMetrics() {
         return userSpecificMetrics;
