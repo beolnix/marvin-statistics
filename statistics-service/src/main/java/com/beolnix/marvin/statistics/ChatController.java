@@ -1,10 +1,11 @@
-package com.beolnix.marvin.statistics.chats;
+package com.beolnix.marvin.statistics;
 
 
 import com.beolnix.marvin.statistics.api.ChatApi;
 import com.beolnix.marvin.statistics.api.model.ChatDTO;
 import com.beolnix.marvin.statistics.api.model.CreateChatDTO;
 
+import com.beolnix.marvin.statistics.chats.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

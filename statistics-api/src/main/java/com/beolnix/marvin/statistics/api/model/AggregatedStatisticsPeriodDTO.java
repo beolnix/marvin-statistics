@@ -15,9 +15,6 @@ public class AggregatedStatisticsPeriodDTO {
     @ApiModelProperty(value = "Period end date time", required = true)
     private LocalDateTime periodEnd;
 
-    @ApiModelProperty(value = "Total metrics aggregated for a year", required = true)
-    private List<MetricDTO> totalMetrics;
-
     @ApiModelProperty(value = "Top user specific metrics aggregated for a year", required = true)
     private List<UserSpecificMetricsDTO> topUserSpecificMetrics;
 
@@ -35,14 +32,6 @@ public class AggregatedStatisticsPeriodDTO {
 
     public void setPeriodEnd(LocalDateTime periodEnd) {
         this.periodEnd = periodEnd;
-    }
-
-    public List<MetricDTO> getTotalMetrics() {
-        return totalMetrics;
-    }
-
-    public void setTotalMetrics(List<MetricDTO> totalMetrics) {
-        this.totalMetrics = totalMetrics;
     }
 
     public List<UserSpecificMetricsDTO> getTopUserSpecificMetrics() {

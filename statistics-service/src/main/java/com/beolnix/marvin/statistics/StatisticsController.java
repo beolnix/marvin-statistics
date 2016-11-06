@@ -1,9 +1,10 @@
-package com.beolnix.marvin.statistics.statistics;
+package com.beolnix.marvin.statistics;
 
 import com.beolnix.marvin.statistics.api.StatisticsApi;
 import com.beolnix.marvin.statistics.api.model.StatisticsDTO;
 import com.beolnix.marvin.statistics.api.model.AggregatedStatisticsDTO;
 import com.beolnix.marvin.statistics.error.BadRequest;
+import com.beolnix.marvin.statistics.statistics.StatisticsService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

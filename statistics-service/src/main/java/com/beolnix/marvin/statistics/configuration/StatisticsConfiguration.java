@@ -40,7 +40,10 @@ public class StatisticsConfiguration extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongo() throws Exception {
-        return new MongoClient(mongoHost);
+
+        MongoClient client = new MongoClient(mongoHost);
+
+        return client;
     }
 
     @Bean
