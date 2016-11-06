@@ -1,6 +1,7 @@
 import com.beolnix.marvin.statistics.Application;
 import com.beolnix.marvin.statistics.api.model.AggregatedStatisticsDTO;
 import com.beolnix.marvin.statistics.api.model.ChatDTO;
+import com.beolnix.marvin.statistics.api.model.UserSpecificMetricsDTO;
 import com.beolnix.marvin.statistics.chats.domain.dao.ChatDAO;
 import com.beolnix.marvin.statistics.statistics.StatisticsService;
 import com.beolnix.marvin.statistics.statistics.domain.dao.UserSpecificMetricDAO;
@@ -125,7 +126,7 @@ public class StatisticsControllerIntegrationTest {
             IntStream.range(1, 10).forEach(num -> {
                 UserSpecificMetric m = new UserSpecificMetric();
                 m.setUsername(userName + userNum);
-                m.setMetricName("msgCount");
+                m.setMetricName(UserSpecificMetricsDTO.MSG_COUNT_METRIC_NAME);
                 m.setValue(num);
                 m.setDateTime(start.plusHours(num));
                 m.setChatId(chatDTO.getId());

@@ -9,6 +9,8 @@ import java.util.Map;
 @ApiModel("DTO for the user specific metrics")
 public class UserSpecificMetricsDTO {
 
+    public final static String MSG_COUNT_METRIC_NAME = "msgCount";
+
     @ApiModelProperty(value = "User details", required = true)
     private UserDTO user;
 
