@@ -4,10 +4,12 @@ import com.beolnix.marvin.statistics.api.model.AggregatedStatisticsDTO;
 import com.beolnix.marvin.statistics.api.model.StatisticsDTO;
 import io.swagger.annotations.*;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +34,11 @@ public interface StatisticsApi {
     void postStatistics(@RequestBody StatisticsDTO statisticsDTO);
 
 
+    /**
+     * Usage example
+     *
+     * curl -H 'X-KEY: test_read_key' -H 'X-SECRET: test_read_auth' 'http://localhost:51463/api/v1/aggregated-statistics?start=2016-11-04T00:00:00Z&end=2016-11-04T09:00:00Z&periodLengthInHours=2&chatId=581f05db8d6aa9f2b2651749'
+     */
     @ApiOperation(value = "Method returns statistics aggretated for requested periods.", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Bad request - if parameters are provided in a wrong format.")
@@ -70,10 +77,10 @@ public interface StatisticsApi {
                     paramType = "query")
     })
     AggregatedStatisticsDTO getAggregatedStatistics(
-            LocalDateTime start,
-            LocalDateTime end,
-            Integer periodLengthInHours,
-            String chatId,
-            String metricName
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @RequestParam(required = true) Integer periodLengthInHours,
+            @RequestParam(required = true) String chatId,
+            @RequestParam(required = false) String metricName
     );
 }
