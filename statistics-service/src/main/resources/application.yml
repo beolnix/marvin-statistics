@@ -2,6 +2,8 @@ statistics.mongo.host: localhost
 statistics.mongo.database: statisticsDev
 statistics.hostname: localhost
 
+statistics.timeZone: UTC
+
 statistics.api.security:
   accessKeys:
     - key: 'test_read_key'

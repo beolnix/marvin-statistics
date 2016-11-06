@@ -1,5 +1,6 @@
 package com.beolnix.marvin.statistics.api.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -11,9 +12,11 @@ import java.util.Map;
 public class AggregatedStatisticsPeriodDTO {
 
     @ApiModelProperty(value = "Period start date time", required = true)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="UTC")
     private LocalDateTime periodStart;
 
     @ApiModelProperty(value = "Period end date time", required = true)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="UTC")
     private LocalDateTime periodEnd;
 
     @ApiModelProperty(value = "Top user specific metrics aggregated for a year", required = true)

@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Arrays;
+import java.util.TimeZone;
 
 
 /**
@@ -32,6 +33,9 @@ public class StatisticsConfiguration extends AbstractMongoConfiguration {
 
     @Value("${statistics.mongo.database}")
     private String mongoDatabase;
+
+    @Value("${statistics.timeZone}")
+    private String timezone;
 
     @Override
     protected String getDatabaseName() {
@@ -55,6 +59,10 @@ public class StatisticsConfiguration extends AbstractMongoConfiguration {
                 WRITE_DATES_AS_TIMESTAMPS , false);
         objectMapper.getSerializationConfig().with(new ISO8601DateFormat());
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TimeZone dateTimeZone = TimeZone.getTimeZone(timezone);
+        TimeZone.setDefault(dateTimeZone);
+        objectMapper.setTimeZone(dateTimeZone);
         return objectMapper;
     }
 

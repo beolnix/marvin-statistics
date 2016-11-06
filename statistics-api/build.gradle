@@ -34,6 +34,8 @@ dependencies {
     compile 'org.springframework.data:spring-data-commons:1.9.3.RELEASE'
     compile "io.swagger:swagger-annotations:1.5.5"
 
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.5'
+
     provided "org.projectlombok:lombok:$LOMBOK_VERSION"
 
 }
