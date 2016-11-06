@@ -22,6 +22,16 @@ public class ChatDTO {
     @ApiModelProperty("Conference flag")
     private Boolean conference;
 
+    @Override
+    public String toString() {
+        return "ChatDTO{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", protocol='" + protocol + '\'' +
+                ", conference=" + conference +
+                '}';
+    }
+
     public String getId() {
         return id;
     }

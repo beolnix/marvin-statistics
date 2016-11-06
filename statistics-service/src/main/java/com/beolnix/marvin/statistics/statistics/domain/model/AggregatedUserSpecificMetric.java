@@ -6,6 +6,7 @@ public class AggregatedUserSpecificMetric {
     private String username;
     private LocalDateTime periodStart;
     private Integer count;
+    private String metricName;
 
     @Override
     public String toString() {
@@ -13,6 +14,7 @@ public class AggregatedUserSpecificMetric {
                 "username='" + username + '\'' +
                 ", periodStart=" + periodStart +
                 ", count=" + count +
+                ", metricName='" + metricName + '\'' +
                 '}';
     }
 
@@ -38,5 +40,13 @@ public class AggregatedUserSpecificMetric {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public String getMetricName() {
+        return metricName;
+    }
+
+    public void setMetricName(String metricName) {
+        this.metricName = metricName;
     }
 }

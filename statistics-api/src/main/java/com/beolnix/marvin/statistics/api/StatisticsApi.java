@@ -62,11 +62,18 @@ public interface StatisticsApi {
                     dataType = "String",
                     required = true,
                     paramType = "query"),
+            @ApiImplicitParam(
+                    value = "Metric name.",
+                    name = "metricName",
+                    dataType = "String",
+                    required = false,
+                    paramType = "query")
     })
     AggregatedStatisticsDTO getAggregatedStatistics(
             LocalDateTime start,
             LocalDateTime end,
             Integer periodLengthInHours,
-            String chatId
+            String chatId,
+            String metricName
     );
 }

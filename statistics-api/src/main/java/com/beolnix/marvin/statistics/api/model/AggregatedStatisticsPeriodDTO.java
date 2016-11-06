@@ -4,7 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @ApiModel("DTO to represent statistics for a period of a time")
 public class AggregatedStatisticsPeriodDTO {
@@ -16,7 +17,20 @@ public class AggregatedStatisticsPeriodDTO {
     private LocalDateTime periodEnd;
 
     @ApiModelProperty(value = "Top user specific metrics aggregated for a year", required = true)
-    private List<UserSpecificMetricsDTO> topUserSpecificMetrics;
+    private Map<String, UserSpecificMetricsDTO> userSpecificMetricsMap;
+
+    @ApiModelProperty(value = "Total metrics aggregated for a year", required = true)
+    private Map<String, Integer> totalMetricsMap = new HashMap<>();
+
+    @Override
+    public String toString() {
+        return "AggregatedStatisticsPeriodDTO{" +
+                "periodStart=" + periodStart +
+                ", periodEnd=" + periodEnd +
+                ", userSpecificMetricsMap=" + userSpecificMetricsMap +
+                ", totalMetricsMap=" + totalMetricsMap +
+                '}';
+    }
 
     public LocalDateTime getPeriodStart() {
         return periodStart;
@@ -34,11 +48,19 @@ public class AggregatedStatisticsPeriodDTO {
         this.periodEnd = periodEnd;
     }
 
-    public List<UserSpecificMetricsDTO> getTopUserSpecificMetrics() {
-        return topUserSpecificMetrics;
+    public Map<String, UserSpecificMetricsDTO> getUserSpecificMetricsMap() {
+        return userSpecificMetricsMap;
     }
 
-    public void setTopUserSpecificMetrics(List<UserSpecificMetricsDTO> topUserSpecificMetrics) {
-        this.topUserSpecificMetrics = topUserSpecificMetrics;
+    public void setUserSpecificMetricsMap(Map<String, UserSpecificMetricsDTO> userSpecificMetricsMap) {
+        this.userSpecificMetricsMap = userSpecificMetricsMap;
+    }
+
+    public Map<String, Integer> getTotalMetricsMap() {
+        return totalMetricsMap;
+    }
+
+    public void setTotalMetricsMap(Map<String, Integer> totalMetricsMap) {
+        this.totalMetricsMap = totalMetricsMap;
     }
 }

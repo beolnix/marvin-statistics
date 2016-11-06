@@ -1,19 +1,21 @@
 package com.beolnix.marvin.statistics.statistics;
 
 import com.beolnix.marvin.statistics.api.model.AggregatedStatisticsDTO;
+import com.beolnix.marvin.statistics.api.model.ChatDTO;
 import com.beolnix.marvin.statistics.api.model.StatisticsDTO;
+import com.beolnix.marvin.statistics.chats.ChatService;
 import com.beolnix.marvin.statistics.statistics.domain.dao.UserSpecificMetricDAO;
+import com.beolnix.marvin.statistics.statistics.domain.model.AggregatedUserSpecificMetric;
 import com.beolnix.marvin.statistics.statistics.domain.model.UserSpecificMetric;
-import com.mongodb.CommandResult;
+import com.beolnix.marvin.statistics.statistics.mongo.MetricsAggregationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,15 +23,22 @@ public class StatisticsService {
 
     private final static Logger logger = LoggerFactory.getLogger(StatisticsService.class);
 
-    private final StatisticsUtil util;
+    private final StatisticsConverter util;
     private final UserSpecificMetricDAO metricDAO;
-    private final MongoTemplate mongo;
+    private final MetricsAggregationService aggregationService;
+    private final ChatService chatService;
+
 
     @Autowired
-    public StatisticsService(StatisticsUtil util, UserSpecificMetricDAO metricDAO, MongoTemplate mongo) {
+    public StatisticsService(
+            StatisticsConverter util,
+            UserSpecificMetricDAO metricDAO,
+            MetricsAggregationService aggregationService,
+            ChatService chatService) {
         this.util = util;
         this.metricDAO = metricDAO;
-        this.mongo = mongo;
+        this.aggregationService = aggregationService;
+        this.chatService = chatService;
     }
 
     public void saveStatistics(StatisticsDTO statisticsDTO) {
@@ -40,13 +49,20 @@ public class StatisticsService {
 
     public AggregatedStatisticsDTO getAggregatedStatistics(LocalDateTime start,
                                                            LocalDateTime end,
-                                                           Integer periodLengthInMinutes,
-                                                           String chatId) {
-        Criteria matchCriteria = Criteria.where("chatId").is(chatId);
+                                                           Integer periodLengthInHours,
+                                                           String chatId,
+                                                           Optional<String> metricName) {
 
-        CommandResult result = mongo.executeCommand("");
+        List<AggregatedUserSpecificMetric> result = aggregationService.aggregateForTimePeriod(
+                start,
+                end,
+                periodLengthInHours,
+                chatId,
+                metricName
+        );
 
-        return null;
+        ChatDTO chatDTO = chatService.getChatById(chatId);
+        return util.convert(result, chatDTO, end, periodLengthInHours);
     }
 
 

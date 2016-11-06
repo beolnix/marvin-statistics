@@ -18,11 +18,13 @@ import java.util.stream.StreamSupport;
 @Service
 public class ChatService {
     private final ChatDAO chatDAO;
+    private final ChatConverter chatConverter;
     private final static Logger logger = LoggerFactory.getLogger(ChatService.class);
 
     @Autowired
-    public ChatService(ChatDAO chatDAO) {
+    public ChatService(ChatDAO chatDAO, ChatConverter chatConverter) {
         this.chatDAO = chatDAO;
+        this.chatConverter = chatConverter;
     }
 
     public ChatDTO createChat(CreateChatDTO createChatDTO) {
@@ -30,13 +32,13 @@ public class ChatService {
         BeanUtils.copyProperties(createChatDTO, chat);
         Chat savedChat = chatDAO.save(chat);
 
-        return convert(savedChat);
+        return chatConverter.convert(savedChat);
     }
 
     public ChatDTO getChatById(String id) {
         Chat chat = chatDAO.findOne(id);
         if (chat != null) {
-            return convert(chat);
+            return chatConverter.convert(chat);
         } else {
             throw new NotFound();
         }
@@ -45,20 +47,13 @@ public class ChatService {
     public ChatDTO getChatByName(String name) {
         Chat chat = chatDAO.findByName(name).stream()
                 .findFirst().orElseThrow(NotFound::new);
-        return convert(chat);
+        return chatConverter.convert(chat);
     }
 
     public List<ChatDTO> getChats() {
         return StreamSupport.stream(chatDAO.findAll().spliterator(), false)
-                .map(this::convert)
+                .map(chatConverter::convert)
                 .collect(Collectors.toList());
     }
-
-    private ChatDTO convert(Chat chat) {
-        ChatDTO dto = new ChatDTO();
-        BeanUtils.copyProperties(chat, dto);
-        return dto;
-    }
-
 
 }

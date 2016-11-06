@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 public class StatisticsController implements StatisticsApi {
@@ -31,7 +32,8 @@ public class StatisticsController implements StatisticsApi {
             LocalDateTime start,
             LocalDateTime end,
             Integer periodLengthInHours,
-            String chatId) {
+            String chatId,
+            String metricName) {
         if (start == null) {
             throw new BadRequest("Start date time must be provided in ISO-8601 format.");
         } else if (end == null) {
@@ -44,7 +46,7 @@ public class StatisticsController implements StatisticsApi {
             throw new BadRequest("ChatId must be provided as non-empty string.");
         }
 
-        return service.getAggregatedStatistics(start, end, periodLengthInHours, chatId);
+        return service.getAggregatedStatistics(start, end, periodLengthInHours, chatId, Optional.ofNullable(metricName));
     }
 
 }

@@ -31,7 +31,8 @@ public class CustomAggregation implements AggregationOperation {
 //        "$group": {
 //            "_id": {
 //                "userName" : "$username",
-//                        "periodStart" : {
+//                "metricName" : "$metricName",
+//                "periodStart" : {
 //                    "$add": [
 //                    { "$subtract": [
 //                        { "$subtract": [ "$dateTime", ISODate("2016-11-01T00:00:00.000Z") ] },
@@ -75,6 +76,7 @@ public class CustomAggregation implements AggregationOperation {
 
         BasicDBObject id = new BasicDBObject();
         id.put("username", "$username");
+        id.put("metricName", "$metricName");
         id.put("periodStart", new BasicDBObject("$add", addArgs));
 
         BasicDBObject group = new BasicDBObject();

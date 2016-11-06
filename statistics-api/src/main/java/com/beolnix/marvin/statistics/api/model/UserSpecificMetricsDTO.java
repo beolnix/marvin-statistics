@@ -3,6 +3,9 @@ package com.beolnix.marvin.statistics.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ApiModel("DTO for the user specific metrics")
 public class UserSpecificMetricsDTO {
 
@@ -10,7 +13,15 @@ public class UserSpecificMetricsDTO {
     private UserDTO user;
 
     @ApiModelProperty(value = "Metric details", required = true)
-    private MetricDTO metric;
+    private Map<String, Integer> metricsMap = new HashMap<>();
+
+    @Override
+    public String toString() {
+        return "UserSpecificMetricsDTO{" +
+                "user=" + user +
+                ", metricsMap=" + metricsMap +
+                '}';
+    }
 
     public UserDTO getUser() {
         return user;
@@ -20,11 +31,11 @@ public class UserSpecificMetricsDTO {
         this.user = user;
     }
 
-    public MetricDTO getMetric() {
-        return metric;
+    public Map<String, Integer> getMetricsMap() {
+        return metricsMap;
     }
 
-    public void setMetric(MetricDTO metric) {
-        this.metric = metric;
+    public void setMetricsMap(Map<String, Integer> metricsMap) {
+        this.metricsMap = metricsMap;
     }
 }

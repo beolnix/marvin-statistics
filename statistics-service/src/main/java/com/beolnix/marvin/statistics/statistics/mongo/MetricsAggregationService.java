@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MetricsAggregationService {
@@ -20,10 +21,20 @@ public class MetricsAggregationService {
     public List<AggregatedUserSpecificMetric> aggregateForTimePeriod(
             LocalDateTime start,
             LocalDateTime end,
-            Integer periodInHours) {
+            Integer periodInHours,
+            String chatId) {
+        return aggregateForTimePeriod(start, end, periodInHours, chatId, Optional.empty());
+    }
+
+    public List<AggregatedUserSpecificMetric> aggregateForTimePeriod(
+            LocalDateTime start,
+            LocalDateTime end,
+            Integer periodInHours,
+            String chatId,
+            Optional<String> metricName) {
 
         Aggregation aggregation = Aggregation.newAggregation(
-                new CustomMatch(start, end), new CustomAggregation(start, periodInHours)
+                new CustomMatch(start, end, chatId, metricName), new CustomAggregation(start, periodInHours)
         );
 
         AggregationResults<AggregatedUserSpecificMetric> result = mongo.aggregate(

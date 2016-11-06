@@ -3,6 +3,7 @@ package com.beolnix.marvin.statistics.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @ApiModel("DTO to represent statistics aggregated by specified periods")
@@ -12,7 +13,15 @@ public class AggregatedStatisticsDTO {
     private ChatDTO chat;
 
     @ApiModelProperty(value = "Requested periods of a statistics", required = true)
-    private List<AggregatedStatisticsPeriodDTO> periods;
+    private List<AggregatedStatisticsPeriodDTO> periods = new LinkedList<>();
+
+    @Override
+    public String toString() {
+        return "AggregatedStatisticsDTO{" +
+                "chat=" + chat +
+                ", periods=" + periods +
+                '}';
+    }
 
     public ChatDTO getChat() {
         return chat;
